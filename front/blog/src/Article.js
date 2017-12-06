@@ -1,62 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Article = (props) => {
-    console.log('props:', props);
+class Article extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            bodyVisible: false
+        };
+
+        this.readmoreClick = this.readmoreClick.bind(this);
+        this.minimizeClick = this.minimizeClick.bind(this);
+    }
+
+    readmoreClick() {
+        this.setState({bodyVisible: true});
+    }
+
+    minimizeClick() {
+        this.setState({bodyVisible: false});
+    }
+
+    render() {
+
+        var title = this.props.data.title,
+            preview =  this.props.data.preview,
+            body = this.props.data.body;
+        
+        var bodyVisible = this.state.bodyVisible;
+
     return (
         <div className="row">
             <div className="col s12">
                 <div className="container">
-                    <h4>{props.data.title}</h4>
+                    <h4>{title}</h4>
                     {/* <div class="divider"></div> */}
-                    
-                    <div class="chip">
-                        Tag One
-                        <i class="close material-icons">close</i>
-                    </div>
-                    <div class="chip">
-                        Tag Two
-                        <i class="close material-icons">close</i>
-                    </div>
 
                     <p className="light">
-                        {props.data.preview}
+                        {preview}
                     </p>
                     
-                    <p className="light hide">
-                        {props.data.body}
+                    <p className={'light ' + (bodyVisible ? '' : 'hide')}>
+                        {body}
                     </p>
-                    <a className="waves-effect waves-light btn">
-                        <i className="material-icons left">visibility</i>
-                            Читать
+                    <a
+                        className={'waves-effect waves-light btn ' + (bodyVisible ? 'hide' : '')}
+                        onClick={this.readmoreClick}>
+                        <i className="material-icons left">visibility</i>Читать
                     </a>
-
-                    
-    
-                    
+                    <a
+                        className={'waves-effect waves-light btn ' + (bodyVisible ? '' : 'hide')}
+                        onClick={this.minimizeClick}>
+                        <i className="material-icons left">visibility_off</i>
+                        Скрыть
+                    </a>                    
                 </div>
             </div>
         </div>       
     );
+    }
 }
 
 export default Article;
-
-/* <div className="row">
-            <div className="col s12">
-                <div className="container">
-                    <div className="section">
-                        <h4>{props.data.title}</h4>
-                        <p className="light">
-                            {props.data.preview}
-                        </p>
-                        <p className="light hide">
-                        {props.data.body}
-                        </p>
-                        <a className="waves-effect waves-light btn">
-                            <i className="material-icons left">visibility</i>
-                            Читать
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div> */
